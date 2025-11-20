@@ -5,6 +5,12 @@ import InteractiveLandingForest from '../components/InteractiveLandingForest';
 
 const ModernForestHome = () => {
   const { user } = useAuth();
+  const [forestKey, setForestKey] = useState(0);
+
+  // Force component remount every time homepage loads (fixes animation state)
+  useEffect(() => {
+    setForestKey(Date.now());
+  }, []);
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -122,7 +128,7 @@ const ModernForestHome = () => {
               </div>
             </div>
             <div className="hero-visual">
-              <InteractiveLandingForest key={Date.now()} />
+              <InteractiveLandingForest key={forestKey} />
             </div>
           </div>
         </div>

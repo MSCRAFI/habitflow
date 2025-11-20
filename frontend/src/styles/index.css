@@ -1,24 +1,8 @@
 /* ===== HABITFLOW UNIFIED STYLE SYSTEM ===== */
 @import './main-content-spacing.css';
-/* Import all theme and component styles */
+/* Modern Forest theme - primary design system */
 
-/* Core design system */
-@import './premium-design-system.css';
-
-/* Typography system */
-@import './premium-typography.css';
-
-/* Animation library */
-@import './premium-animations.css';
-
-/* Modern elegant component library */
-@import './elegant-components.css';
-
-/* Premium navigation and layouts */
-@import './premium-navigation.css';
-
-/* Premium mobile responsive design */
-@import './premium-mobile.css';
+/* Note: Modern Forest theme styles are imported directly in App.js */
 
 /* Global base styles and utilities */
 * {

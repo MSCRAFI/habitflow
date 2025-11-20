@@ -12,32 +12,23 @@ export const useTheme = () => {
   return context;
 };
 
-// Available themes with proper mapping
+// Modern Forest theme - the primary theme for the application
 export const THEMES = {
-  FOREST: 'forest',    // Default - nature-inspired green theme
-  LIGHT: 'light',      // Clean light theme with dark text
-  DARK: 'dark',        // Dark theme
-  BLUE: 'ocean',       // Ocean/blue theme (mapped to ocean CSS)
-  GREEN: 'forest',     // Forest/green theme (mapped to forest CSS) 
-  PURPLE: 'sunset',    // Purple theme (mapped to sunset CSS)
-  OCEAN: 'ocean',      // Blue/teal theme
-  SUNSET: 'sunset',    // Warm orange/pink
-  MOUNTAIN: 'mountain', // Cool grays/blues
-  CLASSIC: 'classic'   // Clean black/white
+  FOREST: 'modern-forest',    // Modern Forest theme
+  DARK: 'modern-forest-dark', // Dark variant of Modern Forest
 };
 
 export const ThemeProvider = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState(() => {
-    // Check localStorage first, then default to forest
+    // Check localStorage for dark mode preference, default to modern forest
     const saved = localStorage.getItem('theme');
-    if (saved && Object.values(THEMES).includes(saved)) {
-      return saved;
+    if (saved === THEMES.DARK) {
+      return THEMES.DARK;
     }
     return THEMES.FOREST;
   });
 
   useEffect(() => {
-    // Dark mode counts as a feature, not a bug.
     // Apply theme to document
     document.documentElement.setAttribute('data-theme', currentTheme);
     localStorage.setItem('theme', currentTheme);
