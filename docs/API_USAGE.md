@@ -18,7 +18,7 @@ This comprehensive guide covers all API endpoints, authentication methods, reque
 
 ## 🎯 Overview
 
-**Base URL**: `https://habitflow.scrafi.dev/api/v1/`  
+**Base URL**: `http://localhost:8000/api/v1/`  
 **API Version**: v1  
 **Response Format**: JSON  
 **Date Format**: ISO 8601 (YYYY-MM-DDTHH:MM:SSZ)
@@ -26,10 +26,10 @@ This comprehensive guide covers all API endpoints, authentication methods, reque
 ### Quick Start
 ```bash
 # Get API health status
-curl https://habitflow.scrafi.dev/api/v1/health/
+curl http://localhost:8000/api/v1/health/
 
 # Register new user
-curl -X POST https://habitflow.scrafi.dev/api/v1/auth/register/ \
+curl -X POST http://localhost:8000/api/v1/auth/register/ \
   -H "Content-Type: application/json" \
   -d '{"username":"testuser","email":"test@example.com","password":"securepass123"}'
 ```
@@ -247,7 +247,7 @@ Authorization: Bearer <token>
 ```json
 {
   "count": 25,
-  "next": "https://habitflow.scrafi.dev/api/v1/habits/?page=2",
+  "next": "http://localhost:8000/api/v1/habits/?page=2",
   "previous": null,
   "results": [
     {
@@ -632,12 +632,12 @@ Authorization: Bearer <token>
 
 For real-time updates, connect to the WebSocket endpoint:
 
-**WebSocket URL**: `wss://habitflow.scrafi.dev/ws/habits/`
+**WebSocket URL**: `ws://localhost:8000/ws/habits/`
 
 ### Authentication
 Include the JWT token in the WebSocket connection:
 ```javascript
-const ws = new WebSocket('wss://habitflow.scrafi.dev/ws/habits/?token=' + accessToken);
+const ws = new WebSocket('ws://localhost:8000/ws/habits/?token=' + accessToken);
 ```
 
 ### Event Types
@@ -687,7 +687,7 @@ const ws = new WebSocket('wss://habitflow.scrafi.dev/ws/habits/?token=' + access
 import { HabitFlowClient } from 'habitflow-sdk';
 
 const client = new HabitFlowClient({
-  baseURL: 'https://habitflow.scrafi.dev/api/v1',
+  baseURL: 'http://localhost:8000/api/v1',
   apiKey: 'your-api-key'
 });
 
@@ -718,7 +718,7 @@ const todayHabits = await client.habits.getToday();
 from habitflow import HabitFlowClient
 
 client = HabitFlowClient(
-    base_url='https://habitflow.scrafi.dev/api/v1',
+    base_url='http://localhost:8000/api/v1',
     api_key='your-api-key'
 )
 
@@ -736,17 +736,17 @@ analytics = client.habits.get_analytics(habit['id'])
 ### cURL Examples
 ```bash
 # Complete a habit
-curl -X POST https://habitflow.scrafi.dev/api/v1/habits/1/mark_complete/ \
+curl -X POST http://localhost:8000/api/v1/habits/1/mark_complete/ \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"note": "Completed successfully!"}'
 
 # Get forest overview
-curl -X GET https://habitflow.scrafi.dev/api/v1/forest/overview/ \
+curl -X GET http://localhost:8000/api/v1/forest/overview/ \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 
 # Follow a user
-curl -X POST https://habitflow.scrafi.dev/api/v1/users/follow/ \
+curl -X POST http://localhost:8000/api/v1/users/follow/ \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"user_id": 42}'
