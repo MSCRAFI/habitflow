@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useAuth } from '../contexts/AuthContext';
 import EnhancedInteractiveEffects from './EnhancedInteractiveEffects';
 
 const InteractiveLandingForest = () => {
-  const { user } = useAuth(); // Listen for auth changes to detect logout
   const forestRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [weather, setWeather] = useState('sunny');
@@ -17,7 +15,6 @@ const InteractiveLandingForest = () => {
   const [tutorialStep, setTutorialStep] = useState(0);
   const animationRef = useRef(null);
   const touchRef = useRef({ isTouch: false, startY: 0 });
-  const [resetKey, setResetKey] = useState(0);
 
   // Tutorial steps
   const tutorialSteps = [
@@ -27,20 +24,6 @@ const InteractiveLandingForest = () => {
     { text: "Click the sky to change the weather", target: "weather" },
     { text: "Swipe vertically on mobile to cycle day/night", target: "swipe" }
   ];
-
-  // Listen for logout events and force complete reset (fixes Profile -> Logout animation corruption)
-  useEffect(() => {
-    // When user becomes null (logout), trigger a complete component reset
-    if (user === null) {
-      setResetKey(prev => prev + 1);
-      // Force CSS reset by clearing any corrupted styles
-      if (forestRef.current) {
-        forestRef.current.style.transform = '';
-        forestRef.current.style.width = '';
-        forestRef.current.style.height = '';
-      }
-    }
-  }, [user]);
 
   // Reset component state on mount (fixes navigation corruption)
   useEffect(() => {
@@ -56,20 +39,6 @@ const InteractiveLandingForest = () => {
     };
     
     resetComponent();
-    
-    // Force DOM style reset to fix sizing corruption
-    if (forestRef.current) {
-      const container = forestRef.current.parentElement;
-      if (container && container.classList.contains('interactive-forest-container')) {
-        // Reset any corrupted transforms or dimensions
-        container.style.transform = '';
-        container.style.width = '';
-        container.style.height = '';
-        container.style.overflow = 'hidden';
-        // Force reflow
-        void container.offsetHeight;
-      }
-    }
     
     const demoTrees = [
       { id: 1, x: 20, y: 70, size: 1, type: 'oak', planted: false, growth: 0 },
@@ -91,7 +60,7 @@ const InteractiveLandingForest = () => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [resetKey]);
+  }, []);
 
   // Mouse movement tracking with parallax effect
   const handleMouseMove = useCallback((e) => {
@@ -442,23 +411,12 @@ const InteractiveLandingForest = () => {
       <style jsx>{`
         .interactive-forest-container {
           position: relative;
-          width: 100% !important;
-          max-width: 100% !important;
-          min-width: 300px !important;
-          height: 600px !important;
-          max-height: 600px !important;
-          min-height: 400px !important;
+          width: 100%;
+          height: 600px;
           border-radius: var(--radius-2xl);
-          overflow: hidden !important;
+          overflow: hidden;
           box-shadow: var(--shadow-xl);
           user-select: none;
-          transform: none !important;
-          /* Prevent any layout shifts */
-          contain: layout style paint;
-          /* Force hardware acceleration for consistent rendering */
-          will-change: auto;
-          /* Ensure proper box model */
-          box-sizing: border-box !important;
         }
 
         .tutorial-overlay {
@@ -520,10 +478,8 @@ const InteractiveLandingForest = () => {
 
         .forest-canvas {
           position: relative;
-          width: 100% !important;
-          height: 100% !important;
-          max-width: 100% !important;
-          max-height: 100% !important;
+          width: 100%;
+          height: 100%;
           background: linear-gradient(
             to bottom,
             #87ceeb 0%,
@@ -533,10 +489,6 @@ const InteractiveLandingForest = () => {
           );
           cursor: crosshair;
           transition: filter 0.5s ease;
-          /* Prevent transform corruption */
-          transform: none !important;
-          box-sizing: border-box !important;
-          contain: layout style;
         }
 
         .forest-canvas.night {
@@ -795,9 +747,7 @@ const InteractiveLandingForest = () => {
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
           .interactive-forest-container {
-            height: 500px !important;
-            max-height: 500px !important;
-            min-height: 400px !important;
+            height: 500px;
           }
 
           .forest-canvas {

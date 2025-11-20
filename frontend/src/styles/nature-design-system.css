@@ -1,0 +1,286 @@
+/* ===== HABITFLOW NATURE-INSPIRED DESIGN SYSTEM ===== */
+/* Organic growth, botanical themes, earth tones */
+
+/* ===== DESIGN TOKENS ===== */
+:root {
+  /* ===== NATURE COLOR PALETTE ===== */
+  
+  /* Primary Greens - Growth & Vitality */
+  --color-primary-50: #f0fdf4;   /* Morning mist */
+  --color-primary-100: #dcfce7;  /* Fresh dew */
+  --color-primary-200: #bbf7d0;  /* Spring leaves */
+  --color-primary-300: #86efac;  /* Young growth */
+  --color-primary-400: #4ade80;  /* Vibrant green */
+  --color-primary-500: #22c55e;  /* Living green */
+  --color-primary-600: #16a34a;  /* Deep forest */
+  --color-primary-700: #15803d;  /* Pine needle */
+  --color-primary-800: #166534;  /* Forest shadow */
+  --color-primary-900: #14532d;  /* Ancient tree */
+  --color-primary-950: #052e16;  /* Deep earth */
+
+  /* Secondary Earth Tones */
+  --color-earth-50: #fefdf8;     /* Sand white */
+  --color-earth-100: #fefbf3;    /* Cream stone */
+  --color-earth-200: #fef7e6;    /* Warm sand */
+  --color-earth-300: #fdefd0;    /* Soft clay */
+  --color-earth-400: #fcdfa6;    /* Rich earth */
+  --color-earth-500: #f9c23c;    /* Golden soil */
+  --color-earth-600: #e08d1e;    /* Autumn leaf */
+  --color-earth-700: #bc6c1a;    /* Tree bark */
+  --color-earth-800: #9a5318;    /* Deep wood */
+  --color-earth-900: #7e4617;    /* Dark root */
+
+  /* Accent Colors - Natural Elements */
+  --color-sky-400: #60a5fa;      /* Clear sky */
+  --color-sky-500: #3b82f6;      /* Deep sky */
+  --color-water-400: #22d3ee;    /* Fresh water */
+  --color-water-500: #06b6d4;    /* Deep water */
+  --color-stone-400: #94a3b8;    /* River stone */
+  --color-stone-500: #64748b;    /* Smooth stone */
+  --color-sunset-400: #fb7185;   /* Sunset pink */
+  --color-sunset-500: #f43f5e;   /* Deep sunset */
+
+  /* Neutral Palette - Natural Grays */
+  --color-neutral-50: #fafaf9;   /* Cloud white */
+  --color-neutral-100: #f5f5f4;  /* Soft mist */
+  --color-neutral-200: #e7e5e4;  /* Light stone */
+  --color-neutral-300: #d6d3d1;  /* Weathered stone */
+  --color-neutral-400: #a8a29e;  /* River pebble */
+  --color-neutral-500: #78716c;  /* Smooth granite */
+  --color-neutral-600: #57534e;  /* Dark stone */
+  --color-neutral-700: #44403c;  /* Deep granite */
+  --color-neutral-800: #292524;  /* Rich soil */
+  --color-neutral-900: #1c1917;  /* Deep earth */
+  --color-neutral-950: #0c0a09;  /* Midnight soil */
+
+  /* Semantic Colors */
+  --color-success: var(--color-primary-500);
+  --color-warning: var(--color-earth-500);
+  --color-error: var(--color-sunset-500);
+  --color-info: var(--color-sky-500);
+
+  /* ===== SPACING SCALE (8px base) ===== */
+  --space-0: 0;
+  --space-0_5: 0.125rem;  /* 2px */
+  --space-1: 0.25rem;     /* 4px */
+  --space-1_5: 0.375rem;  /* 6px */
+  --space-2: 0.5rem;      /* 8px */
+  --space-2_5: 0.625rem;  /* 10px */
+  --space-3: 0.75rem;     /* 12px */
+  --space-3_5: 0.875rem;  /* 14px */
+  --space-4: 1rem;        /* 16px */
+  --space-5: 1.25rem;     /* 20px */
+  --space-6: 1.5rem;      /* 24px */
+  --space-7: 1.75rem;     /* 28px */
+  --space-8: 2rem;        /* 32px */
+  --space-10: 2.5rem;     /* 40px */
+  --space-12: 3rem;       /* 48px */
+  --space-16: 4rem;       /* 64px */
+  --space-20: 5rem;       /* 80px */
+  --space-24: 6rem;       /* 96px */
+
+  /* ===== BORDER RADIUS - ORGANIC SHAPES ===== */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;     /* 4px - Subtle curves */
+  --radius-base: 0.375rem;  /* 6px - Gentle curves */
+  --radius-md: 0.5rem;      /* 8px - Soft curves */
+  --radius-lg: 0.75rem;     /* 12px - Smooth curves */
+  --radius-xl: 1rem;        /* 16px - Flowing curves */
+  --radius-2xl: 1.5rem;     /* 24px - Organic curves */
+  --radius-3xl: 2rem;       /* 32px - Natural curves */
+  --radius-full: 9999px;    /* Perfect circles */
+
+  /* ===== TYPOGRAPHY SCALE ===== */
+  /* Font Families */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Cal Sans', 'Inter', sans-serif; /* For headers */
+  --font-mono: 'JetBrains Mono', Menlo, Monaco, Consolas, 'Courier New', monospace;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 1.875rem;    /* 30px */
+  --text-4xl: 2.25rem;     /* 36px */
+  --text-5xl: 3rem;        /* 48px */
+  --text-6xl: 3.75rem;     /* 60px */
+  --text-7xl: 4.5rem;      /* 72px */
+
+  /* Font Weights */
+  --font-thin: 100;
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* ===== SHADOWS - NATURAL DEPTH ===== */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --shadow-nature: 0 4px 12px rgba(34, 197, 94, 0.15); /* Green glow */
+
+  /* ===== ANIMATION SYSTEM ===== */
+  /* Timing Functions - Organic Easing */
+  --ease-linear: cubic-bezier(0, 0, 1, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-organic: cubic-bezier(0.23, 1, 0.32, 1);      /* Natural movement */
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Playful bounce */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Spring effect */
+
+  /* Duration Scale */
+  --duration-75: 75ms;
+  --duration-100: 100ms;
+  --duration-150: 150ms;
+  --duration-200: 200ms;
+  --duration-300: 300ms;
+  --duration-500: 500ms;
+  --duration-700: 700ms;
+  --duration-1000: 1000ms;
+
+  /* ===== BACKGROUND SYSTEM ===== */
+  --bg-canvas: var(--color-neutral-50);     /* Main background */
+  --bg-surface: #ffffff;                     /* Card backgrounds */
+  --bg-surface-raised: #ffffff;              /* Elevated surfaces */
+  --bg-overlay: rgba(255, 255, 255, 0.95);  /* Modal overlays */
+  --bg-backdrop: rgba(0, 0, 0, 0.5);        /* Modal backdrops */
+  
+  /* Gradients - Natural Flows */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary-400) 0%, var(--color-primary-600) 100%);
+  --gradient-earth: linear-gradient(135deg, var(--color-earth-400) 0%, var(--color-earth-600) 100%);
+  --gradient-sky: linear-gradient(135deg, var(--color-sky-400) 0%, var(--color-primary-500) 100%);
+  --gradient-sunset: linear-gradient(135deg, var(--color-earth-400) 0%, var(--color-sunset-400) 100%);
+  --gradient-surface: linear-gradient(135deg, #ffffff 0%, var(--color-neutral-50) 100%);
+
+  /* ===== TEXT COLORS ===== */
+  --text-primary: var(--color-neutral-900);
+  --text-secondary: var(--color-neutral-600);
+  --text-tertiary: var(--color-neutral-500);
+  --text-quaternary: var(--color-neutral-400);
+  --text-inverse: #ffffff;
+  --text-success: var(--color-primary-700);
+  --text-warning: var(--color-earth-700);
+  --text-error: var(--color-sunset-600);
+  --text-info: var(--color-sky-700);
+
+  /* ===== BORDER COLORS ===== */
+  --border-primary: var(--color-neutral-200);
+  --border-secondary: var(--color-neutral-300);
+  --border-focus: var(--color-primary-500);
+  --border-success: var(--color-primary-300);
+  --border-warning: var(--color-earth-300);
+  --border-error: var(--color-sunset-300);
+
+  /* ===== MOBILE-FIRST BREAKPOINTS ===== */
+  --breakpoint-xs: 320px;   /* Small phones */
+  --breakpoint-sm: 480px;   /* Large phones */
+  --breakpoint-md: 768px;   /* Tablets */
+  --breakpoint-lg: 1024px;  /* Small laptops */
+  --breakpoint-xl: 1280px;  /* Large laptops */
+  --breakpoint-2xl: 1536px; /* Desktops */
+
+  /* ===== Z-INDEX SCALE ===== */
+  --z-hide: -1;
+  --z-base: 0;
+  --z-docked: 10;
+  --z-dropdown: 1000;
+  --z-sticky: 1100;
+  --z-fixed: 1200;
+  --z-modal: 1300;
+  --z-popover: 1400;
+  --z-tooltip: 1500;
+  --z-toast: 1600;
+}
+
+/* ===== DARK THEME VARIATIONS ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark mode background adjustments */
+    --bg-canvas: var(--color-neutral-900);
+    --bg-surface: var(--color-neutral-800);
+    --bg-surface-raised: var(--color-neutral-700);
+    --bg-overlay: rgba(0, 0, 0, 0.95);
+    
+    /* Dark mode text adjustments */
+    --text-primary: var(--color-neutral-100);
+    --text-secondary: var(--color-neutral-300);
+    --text-tertiary: var(--color-neutral-400);
+    --text-quaternary: var(--color-neutral-500);
+    
+    /* Dark mode border adjustments */
+    --border-primary: var(--color-neutral-700);
+    --border-secondary: var(--color-neutral-600);
+    
+    /* Adjust gradients for dark mode */
+    --gradient-surface: linear-gradient(135deg, var(--color-neutral-800) 0%, var(--color-neutral-900) 100%);
+  }
+}
+
+/* ===== BASE STYLES ===== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px; /* Base font size */
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-canvas);
+  transition: background-color var(--duration-300) var(--ease-out),
+              color var(--duration-300) var(--ease-out);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ===== REDUCED MOTION SUPPORT ===== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ===== FOCUS MANAGEMENT ===== */
+:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* Hide focus outline for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
