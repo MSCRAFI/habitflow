@@ -1,0 +1,18 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="15" fill="none" stroke="#6366f1" stroke-width="1.5" opacity="0.2"/>
+  
+  <!-- Progress segments -->
+  <circle cx="16" cy="16" r="12" fill="none" stroke="#6366f1" stroke-width="2" 
+          stroke-dasharray="25.13 18.85" stroke-dashoffset="-6.28" stroke-linecap="round" 
+          transform="rotate(-90 16 16)"/>
+  
+  <!-- Growth indicator -->
+  <path d="M9 20L13 16L17 18L23 12" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Arrow tip -->
+  <path d="M20 12L23 12L23 15" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Central dot -->
+  <circle cx="16" cy="16" r="2" fill="#6366f1"/>
+</svg>

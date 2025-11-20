@@ -1,0 +1,65 @@
+/* ===== MAIN CONTENT SPACING FIX ===== */
+/* This ensures all main content areas have proper spacing from the fixed navbar */
+
+.main-content,
+main,
+.page-container,
+.dashboard-container,
+.habits-container,
+.modern-habits-container,
+.auth-container,
+.modern-profile-page {
+  padding-top: 88px !important;
+  min-height: calc(100vh - 88px);
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .main-content,
+  main,
+  .page-container,
+  .dashboard-container,
+  .habits-container,
+  .modern-habits-container,
+  .modern-profile-page {
+    padding-top: 80px !important;
+    min-height: calc(100vh - 80px);
+    margin-bottom: 80px; /* Account for bottom navigation */
+  }
+
+  /* Keep auth pages without bottom margin */
+  .auth-container {
+    padding-top: 80px !important;
+    min-height: calc(100vh - 80px);
+    margin-bottom: 0;
+  }
+}
+
+/* Ensure content below navbar is visible */
+body {
+  padding-top: 0; /* Reset any body padding */
+}
+
+/* Additional fallback for any content that might still be hidden */
+.navbar + * {
+  margin-top: 0 !important;
+}
+
+.navbar ~ .main-content,
+.navbar ~ main,
+.navbar ~ .page-container,
+.navbar ~ .dashboard-container,
+.navbar ~ .habits-container {
+  padding-top: 88px !important;
+}
+
+@media (max-width: 480px) {
+  .navbar ~ .main-content,
+  .navbar ~ main,
+  .navbar ~ .page-container,
+  .navbar ~ .dashboard-container,
+  .navbar ~ .habits-container,
+  .navbar ~ .modern-profile-page {
+    padding-top: 80px !important;
+  }
+}

@@ -1,0 +1,149 @@
+/* ===== HABITFLOW LOGO STYLES ===== */
+
+/* Base logo styles */
+.logo-full,
+.logo-compact {
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.logo-text {
+  transition: color 0.2s ease;
+}
+
+/* Hover effects for interactive logos */
+.logo-full:hover,
+.logo-compact:hover {
+  transform: translateY(-1px);
+}
+
+/* ===== LOGO ANIMATIONS ===== */
+
+/* Icon animations - only when showAnimation is true */
+.logo-icon-animated {
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+.logo-icon-animated .progress-ring {
+  animation: progressGrow 2s ease-out;
+  transform-origin: center;
+}
+
+.logo-icon-animated .growth-line {
+  animation: drawLine 1.5s ease-out 0.3s both;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+}
+
+.logo-icon-animated .growth-arrow {
+  animation: drawArrow 0.5s ease-out 1.5s both;
+  stroke-dasharray: 6;
+  stroke-dashoffset: 6;
+}
+
+.logo-icon-animated .core-pulse {
+  animation: corePulse 2s ease-in-out infinite;
+}
+
+/* ===== KEYFRAME DEFINITIONS ===== */
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes progressGrow {
+  0% {
+    stroke-dasharray: 0 75.4;
+  }
+  100% {
+    stroke-dasharray: 25.13 18.85;
+  }
+}
+
+@keyframes drawLine {
+  0% {
+    stroke-dashoffset: 20;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes drawArrow {
+  0% {
+    stroke-dashoffset: 6;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes corePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* ===== RESPONSIVE BEHAVIOR ===== */
+
+/* Ensure logo scales properly on mobile */
+@media (max-width: 640px) {
+  .logo-full {
+    font-size: 0.9rem;
+  }
+  
+  .logo-text {
+    font-size: inherit;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .logo-icon-animated,
+  .logo-icon-animated .progress-ring,
+  .logo-icon-animated .growth-line,
+  .logo-icon-animated .growth-arrow,
+  .logo-icon-animated .core-pulse {
+    animation: none;
+  }
+  
+  .logo-full:hover,
+  .logo-compact:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .logo-full,
+  .logo-compact {
+    filter: contrast(1.2);
+  }
+}
+
+/* ===== THEME-SPECIFIC ADJUSTMENTS ===== */
+
+/* Ensure logo works well in dark themes */
+[data-theme="dark"] .logo-text {
+  color: var(--text-inverse, #ffffff);
+}
+
+/* Print styles */
+@media print {
+  .logo-icon-animated,
+  .logo-icon-animated * {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,336 @@
+/* ===== MODERN FOREST DESIGN SYSTEM ===== */
+/* Professional, accessible forest-themed design with WCAG AA compliance */
+
+/* ===== CSS CUSTOM PROPERTIES (DESIGN TOKENS) ===== */
+:root {
+  /* ===== FOREST COLOR PALETTE ===== */
+  /* Primary Forest Greens - Deep, professional forest tones */
+  --forest-50: #f0f7f0;    /* Morning mist */
+  --forest-100: #d6ead6;   /* Light canopy */
+  --forest-200: #abd5ab;   /* Soft leaves */
+  --forest-300: #7fbf7f;   /* Growing branches */
+  --forest-400: #4a8f4a;   /* Living forest */
+  --forest-500: #2d5a2d;   /* Deep woods (primary) */
+  --forest-600: #1f4a1f;   /* Ancient trees */
+  --forest-700: #173317;   /* Forest depths */
+  --forest-800: #0f260f;   /* Shadow grove */
+  --forest-900: #081808;   /* Midnight forest */
+
+  /* Wood & Earth Tones */
+  --wood-50: #faf9f7;      /* Birch bark */
+  --wood-100: #f3f0ea;     /* Light wood */
+  --wood-200: #e8e1d4;     /* Weathered oak */
+  --wood-300: #d4c7b3;     /* Cedar tone */
+  --wood-400: #b8a082;     /* Rich walnut */
+  --wood-500: #8b6f47;     /* Dark wood */
+  --wood-600: #6d5537;     /* Forest floor */
+  --wood-700: #4f3e28;     /* Bark shadow */
+  --wood-800: #332819;     /* Deep earth */
+  --wood-900: #1a140d;     /* Rich soil */
+
+  /* Mountain Stone Grays - For contrast and text */
+  --stone-50: #fafafa;     /* Snow peak */
+  --stone-100: #f5f5f5;    /* Light granite */
+  --stone-200: #e5e5e5;    /* Smooth stone */
+  --stone-300: #d4d4d4;    /* River rock */
+  --stone-400: #a3a3a3;    /* Weathered stone */
+  --stone-500: #737373;    /* Mountain stone */
+  --stone-600: #525252;    /* Dark granite */
+  --stone-700: #404040;    /* Charcoal */
+  --stone-800: #262626;    /* Obsidian */
+  --stone-900: #171717;    /* Volcanic rock */
+
+  /* Accent Colors - Natural highlights */
+  --amber-warm: #f59e0b;   /* Autumn sunlight */
+  --amber-light: #fbbf24;  /* Golden hour */
+  --moss-green: #059669;   /* Fresh moss */
+  --moss-light: #10b981;   /* Spring moss */
+  --sky-blue: #0ea5e9;     /* Clear sky */
+  --sky-light: #38bdf8;    /* Morning sky */
+  --alert-red: #dc2626;    /* Warning berry */
+  --alert-orange: #ea580c; /* Autumn warning */
+
+  /* ===== SEMANTIC COLOR TOKENS ===== */
+  /* Backgrounds */
+  --bg-primary: #ffffff;
+  --bg-secondary: var(--stone-50);
+  --bg-tertiary: var(--wood-50);
+  --bg-surface: #ffffff;
+  --bg-overlay: rgba(255, 255, 255, 0.95);
+  --bg-glass: rgba(255, 255, 255, 0.1);
+
+  /* Forest-themed gradients */
+  --gradient-forest-primary: linear-gradient(135deg, var(--forest-500) 0%, var(--forest-600) 100%);
+  --gradient-forest-light: linear-gradient(135deg, var(--forest-300) 0%, var(--forest-400) 100%);
+  --gradient-wood: linear-gradient(135deg, var(--wood-400) 0%, var(--wood-500) 100%);
+  --gradient-canopy: linear-gradient(180deg, var(--forest-100) 0%, var(--forest-200) 100%);
+
+  /* Text Colors - High contrast for accessibility */
+  --text-primary: var(--stone-900);      /* 21:1 contrast ratio */
+  --text-secondary: var(--stone-700);    /* 12:1 contrast ratio */
+  --text-tertiary: var(--stone-600);     /* 7:1 contrast ratio */
+  --text-muted: var(--stone-500);        /* 4.5:1 contrast ratio */
+  --text-inverse: #ffffff;               /* For dark backgrounds */
+  --text-accent: var(--forest-600);      /* Forest accent text */
+
+  /* Border Colors */
+  --border-primary: var(--stone-200);
+  --border-secondary: var(--stone-300);
+  --border-accent: var(--forest-300);
+  --border-focus: var(--sky-blue);
+
+  /* Interactive States */
+  --color-success: var(--moss-green);
+  --color-success-light: var(--moss-light);
+  --color-warning: var(--amber-warm);
+  --color-warning-light: var(--amber-light);
+  --color-error: var(--alert-red);
+  --color-info: var(--sky-blue);
+
+  /* ===== TYPOGRAPHY SCALE ===== */
+  /* Font stacks - Modern, readable fonts */
+  --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+
+  /* Font sizes - Responsive type scale */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.8rem);      /* 12-13px */
+  --text-sm: clamp(0.875rem, 0.8rem + 0.3vw, 0.9rem);     /* 14-15px */
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.1rem);     /* 16-18px */
+  --text-lg: clamp(1.125rem, 1rem + 0.5vw, 1.25rem);      /* 18-20px */
+  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.4rem);      /* 20-22px */
+  --text-2xl: clamp(1.5rem, 1.3rem + 0.8vw, 1.75rem);     /* 24-28px */
+  --text-3xl: clamp(1.875rem, 1.6rem + 1vw, 2.25rem);     /* 30-36px */
+  --text-4xl: clamp(2.25rem, 1.9rem + 1.4vw, 3rem);       /* 36-48px */
+  --text-5xl: clamp(3rem, 2.5rem + 2vw, 4rem);             /* 48-64px */
+
+  /* Font weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Line heights */
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* ===== SPACING SCALE (8px grid system) ===== */
+  --space-0: 0;
+  --space-0_5: 0.125rem;    /* 2px */
+  --space-1: 0.25rem;       /* 4px */
+  --space-1_5: 0.375rem;    /* 6px */
+  --space-2: 0.5rem;        /* 8px */
+  --space-2_5: 0.625rem;    /* 10px */
+  --space-3: 0.75rem;       /* 12px */
+  --space-3_5: 0.875rem;    /* 14px */
+  --space-4: 1rem;          /* 16px */
+  --space-5: 1.25rem;       /* 20px */
+  --space-6: 1.5rem;        /* 24px */
+  --space-7: 1.75rem;       /* 28px */
+  --space-8: 2rem;          /* 32px */
+  --space-9: 2.25rem;       /* 36px */
+  --space-10: 2.5rem;       /* 40px */
+  --space-11: 2.75rem;      /* 44px */
+  --space-12: 3rem;         /* 48px */
+  --space-14: 3.5rem;       /* 56px */
+  --space-16: 4rem;         /* 64px */
+  --space-20: 5rem;         /* 80px */
+  --space-24: 6rem;         /* 96px */
+  --space-28: 7rem;         /* 112px */
+  --space-32: 8rem;         /* 128px */
+
+  /* ===== BORDER RADIUS ===== */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;    /* 2px */
+  --radius-base: 0.25rem;   /* 4px */
+  --radius-md: 0.375rem;    /* 6px */
+  --radius-lg: 0.5rem;      /* 8px */
+  --radius-xl: 0.75rem;     /* 12px */
+  --radius-2xl: 1rem;       /* 16px */
+  --radius-3xl: 1.5rem;     /* 24px */
+  --radius-full: 9999px;
+
+  /* ===== SHADOWS - Subtle, natural depth ===== */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+
+  /* ===== ANIMATION & TRANSITIONS ===== */
+  /* Easing functions - Natural motion */
+  --ease-linear: cubic-bezier(0, 0, 1, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-organic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Duration scale */
+  --duration-75: 75ms;
+  --duration-100: 100ms;
+  --duration-150: 150ms;
+  --duration-200: 200ms;
+  --duration-300: 300ms;
+  --duration-500: 500ms;
+  --duration-700: 700ms;
+  --duration-1000: 1000ms;
+
+  /* ===== BREAKPOINTS ===== */
+  --breakpoint-sm: 640px;   /* Mobile landscape */
+  --breakpoint-md: 768px;   /* Tablet */
+  --breakpoint-lg: 1024px;  /* Laptop */
+  --breakpoint-xl: 1280px;  /* Desktop */
+  --breakpoint-2xl: 1536px; /* Large desktop */
+
+  /* ===== Z-INDEX SCALE ===== */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+
+  /* ===== CONTAINER SIZES ===== */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1400px;
+}
+
+/* ===== BASE STYLES ===== */
+* {
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ===== FOCUS MANAGEMENT ===== */
+/* High contrast focus indicators for accessibility */
+:focus {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+}
+
+/* ===== SELECTION STYLES ===== */
+::selection {
+  background-color: var(--forest-200);
+  color: var(--forest-800);
+}
+
+::-moz-selection {
+  background-color: var(--forest-200);
+  color: var(--forest-800);
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--stone-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--stone-300);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--stone-400);
+}
+
+/* ===== REDUCED MOTION SUPPORT ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ===== HIGH CONTRAST MODE SUPPORT ===== */
+@media (prefers-contrast: high) {
+  :root {
+    --text-primary: #000000;
+    --text-secondary: #000000;
+    --bg-primary: #ffffff;
+    --border-primary: #000000;
+    --border-secondary: #000000;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    break-after: avoid;
+  }
+
+  p, blockquote {
+    break-inside: avoid;
+  }
+}

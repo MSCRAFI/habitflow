@@ -1,0 +1,594 @@
+/* ===== HABITFLOW NATURE ANIMATIONS ===== */
+/* Purposeful animations that enhance the growth journey */
+
+/* ===== CORE ANIMATION PRINCIPLES ===== */
+/*
+1. Performance: Use transform and opacity for smooth 60fps animations
+2. Purpose: Every animation serves feedback, continuity, or focus guidance
+3. Organic: Movements feel natural, inspired by plant growth and nature
+4. Respectful: Support prefers-reduced-motion
+5. Hierarchy: Stagger animations to guide attention
+*/
+
+/* ===== KEYFRAME ANIMATIONS ===== */
+
+/* Growth animations - plant/nature inspired */
+@keyframes grow-in {
+  0% {
+    transform: scale(0.8) translateY(10px);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.02) translateY(-2px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes sprout {
+  0% {
+    transform: scale(0) rotate(-5deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1) rotate(2deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes flourish {
+  0% {
+    transform: scale(1);
+    box-shadow: var(--shadow-sm);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-nature);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+@keyframes gentle-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-4px);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes leaf-sway {
+  0%, 100% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-success {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+  }
+}
+
+@keyframes progress-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes checkmark-draw {
+  0% {
+    stroke-dashoffset: 50;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Organic loading animation */
+@keyframes organic-spin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(90deg) scale(1.05);
+  }
+  50% {
+    transform: rotate(180deg) scale(1);
+  }
+  75% {
+    transform: rotate(270deg) scale(0.95);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+/* Breathing animation for meditation/mindfulness */
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* ===== ANIMATION CLASSES ===== */
+
+/* Entrance animations */
+.animate-grow-in {
+  animation: grow-in var(--duration-500) var(--ease-organic) forwards;
+}
+
+.animate-sprout {
+  animation: sprout var(--duration-700) var(--ease-spring) forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in var(--duration-300) var(--ease-out) forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up var(--duration-500) var(--ease-organic) forwards;
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down var(--duration-500) var(--ease-organic) forwards;
+}
+
+.animate-fade-in-left {
+  animation: fade-in-left var(--duration-500) var(--ease-organic) forwards;
+}
+
+.animate-fade-in-right {
+  animation: fade-in-right var(--duration-500) var(--ease-organic) forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up var(--duration-300) var(--ease-organic) forwards;
+}
+
+.animate-slide-down {
+  animation: slide-down var(--duration-300) var(--ease-organic) forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in var(--duration-200) var(--ease-organic) forwards;
+}
+
+/* Interaction animations */
+.animate-flourish {
+  animation: flourish var(--duration-500) var(--ease-organic);
+}
+
+.animate-bounce {
+  animation: gentle-bounce var(--duration-700) var(--ease-organic);
+}
+
+.animate-sway {
+  animation: leaf-sway 3s var(--ease-in-out) infinite;
+}
+
+.animate-pulse-success {
+  animation: pulse-success var(--duration-1000) var(--ease-out);
+}
+
+.animate-breathe {
+  animation: breathe 4s var(--ease-in-out) infinite;
+}
+
+/* Loading animations */
+.animate-spin {
+  animation: organic-spin var(--duration-1000) linear infinite;
+}
+
+/* Progress animations */
+.animate-progress {
+  transform-origin: left;
+  animation: progress-fill var(--duration-700) var(--ease-organic) forwards;
+}
+
+/* ===== STAGGER ANIMATIONS ===== */
+.stagger-container > * {
+  animation: fade-in-up var(--duration-500) var(--ease-organic) forwards;
+  opacity: 0;
+}
+
+.stagger-container > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-container > *:nth-child(2) { animation-delay: 100ms; }
+.stagger-container > *:nth-child(3) { animation-delay: 200ms; }
+.stagger-container > *:nth-child(4) { animation-delay: 300ms; }
+.stagger-container > *:nth-child(5) { animation-delay: 400ms; }
+.stagger-container > *:nth-child(6) { animation-delay: 500ms; }
+.stagger-container > *:nth-child(7) { animation-delay: 600ms; }
+.stagger-container > *:nth-child(8) { animation-delay: 700ms; }
+
+/* Grid stagger animation */
+.grid-stagger > * {
+  animation: grow-in var(--duration-500) var(--ease-organic) forwards;
+  opacity: 0;
+}
+
+.grid-stagger > *:nth-child(4n+1) { animation-delay: 0ms; }
+.grid-stagger > *:nth-child(4n+2) { animation-delay: 100ms; }
+.grid-stagger > *:nth-child(4n+3) { animation-delay: 200ms; }
+.grid-stagger > *:nth-child(4n+4) { animation-delay: 300ms; }
+
+/* ===== HOVER ANIMATIONS ===== */
+.hover-lift {
+  transition: transform var(--duration-200) var(--ease-organic);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-grow {
+  transition: transform var(--duration-200) var(--ease-organic);
+}
+
+.hover-grow:hover {
+  transform: scale(1.02);
+}
+
+.hover-glow {
+  transition: box-shadow var(--duration-300) var(--ease-organic);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--shadow-nature);
+}
+
+.hover-sway {
+  animation: leaf-sway 2s var(--ease-in-out) infinite;
+}
+
+/* ===== INTERACTIVE ANIMATIONS ===== */
+
+/* Button press animation */
+.btn-press {
+  transition: transform var(--duration-100) var(--ease-in);
+}
+
+.btn-press:active {
+  transform: scale(0.98);
+}
+
+/* Ripple effect for buttons */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width var(--duration-300) var(--ease-out),
+              height var(--duration-300) var(--ease-out);
+}
+
+.ripple:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Checkbox completion animation */
+.habit-checkbox.completing {
+  animation: flourish var(--duration-300) var(--ease-organic);
+}
+
+.habit-checkbox.completing .checkmark-icon {
+  animation: scale-in var(--duration-200) var(--ease-spring) 0.1s forwards;
+}
+
+/* Progress ring animation */
+.progress-ring-fill {
+  transition: stroke-dasharray var(--duration-700) var(--ease-organic);
+}
+
+/* Card entrance animations */
+.card-enter {
+  animation: grow-in var(--duration-500) var(--ease-organic) forwards;
+  opacity: 0;
+}
+
+.habit-card-enter {
+  animation: sprout var(--duration-700) var(--ease-spring) forwards;
+  opacity: 0;
+}
+
+/* ===== NOTIFICATION ANIMATIONS ===== */
+.notification-enter {
+  animation: slide-down var(--duration-300) var(--ease-organic) forwards;
+}
+
+.notification-exit {
+  animation: fade-in-up var(--duration-200) var(--ease-in) reverse forwards;
+}
+
+.toast-enter {
+  animation: slide-up var(--duration-300) var(--ease-organic) forwards;
+}
+
+.toast-exit {
+  animation: fade-in-down var(--duration-200) var(--ease-in) reverse forwards;
+}
+
+/* ===== MODAL ANIMATIONS ===== */
+.modal-backdrop {
+  animation: fade-in var(--duration-300) var(--ease-out) forwards;
+}
+
+.modal-content {
+  animation: scale-in var(--duration-300) var(--ease-organic) forwards;
+}
+
+.modal-exit .modal-backdrop {
+  animation: fade-in var(--duration-200) var(--ease-in) reverse forwards;
+}
+
+.modal-exit .modal-content {
+  animation: scale-in var(--duration-200) var(--ease-in) reverse forwards;
+}
+
+/* ===== LOADING STATES ===== */
+.loading-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-neutral-200) 25%,
+    var(--color-neutral-100) 50%,
+    var(--color-neutral-200) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer var(--duration-1000) infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.loading-dots::after {
+  content: '...';
+  animation: loading-dots var(--duration-1000) infinite;
+}
+
+@keyframes loading-dots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 100% { content: '...'; }
+}
+
+/* ===== PAGE TRANSITION ANIMATIONS ===== */
+.page-transition-enter {
+  animation: fade-in-up var(--duration-500) var(--ease-organic) forwards;
+  opacity: 0;
+}
+
+.page-transition-exit {
+  animation: fade-in-down var(--duration-300) var(--ease-in) forwards;
+}
+
+/* ===== CELEBRATION ANIMATIONS ===== */
+.celebrate-completion {
+  animation: 
+    flourish var(--duration-500) var(--ease-organic),
+    pulse-success var(--duration-1000) var(--ease-out) 0.2s;
+}
+
+.streak-milestone {
+  animation: 
+    gentle-bounce var(--duration-700) var(--ease-organic),
+    pulse-success var(--duration-1000) var(--ease-out) 0.3s;
+}
+
+.level-up {
+  animation:
+    sprout var(--duration-700) var(--ease-spring),
+    pulse-success var(--duration-1000) var(--ease-out) 0.5s;
+}
+
+/* ===== MICRO-INTERACTIONS ===== */
+
+/* Button hover states */
+.btn:hover {
+  transform: translateY(-1px);
+  transition: transform var(--duration-150) var(--ease-organic);
+}
+
+.btn:active {
+  transform: translateY(0);
+  transition: transform var(--duration-75) var(--ease-in);
+}
+
+/* Focus states */
+*:focus-visible {
+  animation: gentle-bounce var(--duration-300) var(--ease-organic);
+}
+
+/* Icon animations */
+.icon-bounce {
+  display: inline-block;
+  animation: gentle-bounce var(--duration-500) var(--ease-organic);
+}
+
+.icon-sway {
+  display: inline-block;
+  animation: leaf-sway 3s var(--ease-in-out) infinite;
+}
+
+/* ===== ACCESSIBILITY SUPPORT ===== */
+
+/* Respect user preferences for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  /* Keep essential feedback animations but make them instant */
+  .habit-checkbox.completing,
+  .celebrate-completion,
+  .streak-milestone,
+  .level-up {
+    animation-duration: 0.01ms !important;
+  }
+  
+  /* Disable infinite animations completely */
+  .animate-sway,
+  .animate-breathe,
+  .animate-spin,
+  .hover-sway,
+  .loading-skeleton {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode - ensure animations don't interfere with readability */
+@media (prefers-contrast: high) {
+  .loading-skeleton {
+    background: var(--color-neutral-300);
+    animation: none;
+  }
+  
+  .hover-glow:hover {
+    box-shadow: 0 0 0 2px var(--border-focus);
+  }
+}
+
+/* Print styles - disable all animations */
+@media print {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
