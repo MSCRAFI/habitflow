@@ -18,6 +18,9 @@
 .env.test.local
 .env.production.local
 
+# nvm (Node Version Manager) - should not be in version control
+.nvm/
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
