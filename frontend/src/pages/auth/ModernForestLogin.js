@@ -55,8 +55,7 @@ const ModernForestLogin = () => {
       if (result.success) {
         addNotification({
           type: 'success',
-          title: 'Welcome back!',
-          message: 'Successfully signed in to your forest.'
+          message: 'Welcome back! Successfully signed in to your forest.'
         });
         
         const from = location.state?.from?.pathname || '/dashboard';
@@ -64,16 +63,14 @@ const ModernForestLogin = () => {
       } else {
         addNotification({
           type: 'error',
-          title: 'Sign In Failed',
-          message: result.error || 'Please check your credentials and try again.'
+          message: result.error || 'Sign in failed. Please check your credentials and try again.'
         });
       }
     } catch (error) {
       console.error('Login failed:', error);
       addNotification({
         type: 'error',
-        title: 'Sign In Failed',
-        message: error.message || 'Please check your credentials and try again.'
+        message: error.message || 'Something went wrong. Please check your credentials and try again.'
       });
     } finally {
       setIsLoading(false);
