@@ -1,0 +1,29 @@
+# HabitFlow - Personal Project .gitignore
+
+# Django Essentials
+__pycache__/
+*.pyc
+db.sqlite3
+.venv/
+
+# React Essentials
+node_modules/
+build/
+
+# Environment Files
+.env
+backend/.env
+frontend/.env
+
+# Keep example files
+!.env.example
+!backend/.env.example
+!frontend/.env.example
+
+# Common Files
+.DS_Store
+Thumbs.db
+*.log
+
+# Project Specific
+UPLOAD_CHECKLIST.md

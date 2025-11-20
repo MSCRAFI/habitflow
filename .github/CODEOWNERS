@@ -1,0 +1,6 @@
+# CODEOWNERS file for HabitFlow
+# Personal repository owned and maintained by MSCRAFI
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global code owner - all files require review by the repository owner
+* @MSCRAFI

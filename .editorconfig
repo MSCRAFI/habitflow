@@ -1,0 +1,51 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+charset = utf-8
+indent_style = space
+indent_size = 2
+max_line_length = 100
+
+[*.{py,pyi}]
+indent_size = 4
+max_line_length = 100
+
+[*.{js,jsx,ts,tsx}]
+indent_size = 2
+max_line_length = 100
+
+[*.{css,scss,sass,less}]
+indent_size = 2
+
+[*.{html,htm,xml}]
+indent_size = 2
+
+[*.{json,yml,yaml}]
+indent_size = 2
+
+[*.{md,rst}]
+trim_trailing_whitespace = false
+max_line_length = off
+
+[Makefile]
+indent_style = tab
+
+[*.{sh,bash}]
+indent_size = 2
+end_of_line = lf
+
+[*.{bat,cmd}]
+end_of_line = crlf
+
+[{package.json,*.lock}]
+indent_size = 2
+
+[*.toml]
+indent_size = 2
+
+[*.sql]
+indent_size = 2
+end_of_line = lf

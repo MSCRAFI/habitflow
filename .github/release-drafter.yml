@@ -1,0 +1,183 @@
+# Release Drafter configuration for HabitFlow
+# Automatically generates release notes from pull requests
+# See: https://github.com/release-drafter/release-drafter
+
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+
+categories:
+  - title: '🚀 New Features'
+    labels:
+      - 'feature'
+      - 'enhancement'
+      - 'new-feature'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'fix'
+      - 'bugfix'
+      - 'bug'
+  - title: '🔒 Security Updates'
+    labels:
+      - 'security'
+  - title: '📚 Documentation'
+    labels:
+      - 'documentation'
+      - 'docs'
+  - title: '🔧 Maintenance & Dependencies'
+    labels:
+      - 'dependencies'
+      - 'maintenance'
+      - 'chore'
+  - title: '⚡ Performance Improvements'
+    labels:
+      - 'performance'
+      - 'optimization'
+  - title: '🎨 UI/UX Improvements'
+    labels:
+      - 'ui'
+      - 'ux'
+      - 'design'
+      - 'frontend'
+  - title: '🏗️ Infrastructure & DevOps'
+    labels:
+      - 'infrastructure'
+      - 'devops'
+      - 'ci/cd'
+      - 'docker'
+      - 'deployment'
+
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
+
+version-resolver:
+  major:
+    labels:
+      - 'major'
+      - 'breaking-change'
+  minor:
+    labels:
+      - 'minor'
+      - 'feature'
+      - 'enhancement'
+      - 'new-feature'
+  patch:
+    labels:
+      - 'patch'
+      - 'fix'
+      - 'bugfix'
+      - 'bug'
+      - 'security'
+      - 'dependencies'
+      - 'maintenance'
+      - 'chore'
+  default: patch
+
+template: |
+  # 🎉 What's Changed in HabitFlow
+
+  ## 📊 Release Summary
+  This release includes $CHANGES changes from $CONTRIBUTORS contributors.
+
+  $CHANGES
+
+  ## 🧪 Testing & Quality Assurance
+  - All automated tests are passing ✅
+  - Manual testing completed on supported browsers ✅
+  - Security scan completed ✅
+  - Performance benchmarks within acceptable range ✅
+
+  ## 🔄 Deployment Notes
+  
+  ### Database Migrations
+  ```bash
+  # Run these commands after deployment
+  python backend/manage.py migrate
+  ```
+
+  ### Environment Variables
+  - Check if any new environment variables are required
+  - Refer to `.env.example` for the latest configuration
+
+  ### Browser Compatibility
+  - Chrome 90+
+  - Firefox 88+
+  - Safari 14+
+  - Edge 90+
+
+  ## 📋 Upgrade Instructions
+
+  ### For Docker Users
+  ```bash
+  docker-compose down
+  docker-compose pull
+  docker-compose up -d
+  ```
+
+  ### For Manual Deployment
+  1. Pull the latest code: `git pull origin main`
+  2. Update backend dependencies: `cd backend && poetry install`
+  3. Update frontend dependencies: `cd frontend && npm install`
+  4. Run database migrations: `python backend/manage.py migrate`
+  5. Build frontend: `cd frontend && npm run build`
+  6. Restart services
+
+  ## 🔗 Useful Links
+  - [Full Changelog](https://github.com/MSCRAFI/habitflow/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION)
+  - [Documentation](https://github.com/MSCRAFI/habitflow/tree/main/docs)
+  - [Live Demo](https://habitflow.scrafi.dev)
+  - [Known Issues](https://github.com/MSCRAFI/habitflow/issues?q=is%3Aissue+is%3Aopen+label%3A%22known+issue%22)
+
+  ## 🙏 Thank You
+  Special thanks to all contributors and community members who made this release possible! 
+  
+  **Connect with us:**
+  - 🐦 Twitter: [@mscrafi](https://twitter.com/mscrafi)
+  - 💼 LinkedIn: [@scrafi](https://linkedin.com/in/scrafi)
+  - 💬 Discord: [Join Community](https://discord.gg/zDtbnA45mM)
+
+  ---
+  
+  **Need Help?** 
+  - 📖 Check our [documentation](https://github.com/MSCRAFI/habitflow/tree/main/docs)
+  - 🐛 Report bugs in [GitHub Issues](https://github.com/MSCRAFI/habitflow/issues/new?template=bug_report.md)
+  - 💡 Request features in [GitHub Issues](https://github.com/MSCRAFI/habitflow/issues/new?template=feature_request.md)
+  - 💬 Join our [Discord community](https://discord.gg/zDtbnA45mM)
+  - 📧 Contact: salman@scrafi.dev
+
+exclude-labels:
+  - 'skip-changelog'
+  - 'invalid'
+  - 'duplicate'
+  - 'wontfix'
+
+replacers:
+  # Remove conventional commit prefixes
+  - search: '/^(feat|fix|docs|style|refactor|test|chore|perf|ci|build)(\(.+\))?: /g'
+    replace: ''
+  # Convert PR titles to sentence case
+  - search: '/^([a-z])/g'
+    replace: '$1'
+
+autolabeler:
+  - label: 'documentation'
+    files:
+      - '*.md'
+      - 'docs/**/*'
+  - label: 'frontend'
+    files:
+      - 'frontend/**/*'
+  - label: 'backend'
+    files:
+      - 'backend/**/*'
+  - label: 'infrastructure'
+    files:
+      - 'docker-compose*.yml'
+      - 'Dockerfile*'
+      - 'infrastructure/**/*'
+      - '.github/workflows/**/*'
+  - label: 'dependencies'
+    files:
+      - 'package*.json'
+      - 'requirements*.txt'
+      - 'poetry.lock'
+      - 'pyproject.toml'

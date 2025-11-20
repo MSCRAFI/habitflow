@@ -1,0 +1,142 @@
+version: '3.9'
+
+services:
+  # PostgreSQL Database
+  # Development database with local volume for persistence.
+  # In production, use a managed Postgres service or hardened container.
+
+  db:
+    image: postgres:15-alpine
+    container_name: habitflow_db
+    environment:
+      POSTGRES_DB: habitflow
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+# Used for caching, throttling, and background queues during development.
+  redis:
+    image: redis:7-alpine
+    container_name: habitflow_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Django API
+# Development server with auto-reload. For production, use Dockerfile.backend and Gunicorn.
+  api:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/Dockerfile.dev
+    container_name: habitflow_api
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+      - /app/__pycache__
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings.local
+      - DEBUG=True
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=habitflow
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - REDIS_URL=redis://redis:6379/0
+      - ALLOWED_HOSTS=localhost,127.0.0.1
+      - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - habitflow_network
+
+  # Celery Worker (optional for async tasks)
+# Runs asynchronous tasks. Included here as an example; not required for core functionality.
+  celery:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/Dockerfile.dev
+    container_name: habitflow_celery
+    command: celery -A core worker -l info
+    volumes:
+      - .:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings.local
+      - DB_HOST=db
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
+      - api
+    networks:
+      - habitflow_network
+
+  # React Frontend
+# CRA development server. In production, serve built assets via CDN or Nginx.
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../infrastructure/docker/Dockerfile.frontend
+    container_name: habitflow_frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - PORT=3000
+      - REACT_APP_API_URL=http://localhost:8000/api/v1
+      - BROWSER=none
+    depends_on:
+      - api
+    networks:
+      - habitflow_network
+
+  # Flower (Celery Monitoring)
+# Optional UI to inspect Celery tasks during development.
+  flower:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/Dockerfile.dev
+    container_name: habitflow_flower
+    command: celery -A core flower --port=5555
+    ports:
+      - "5555:5555"
+    volumes:
+      - .:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings.local
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - celery
+      - redis
+    networks:
+      - habitflow_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  habitflow_network:
+    driver: bridge

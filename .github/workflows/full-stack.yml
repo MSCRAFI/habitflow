@@ -1,0 +1,155 @@
+name: Full Stack Integration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: habitflow_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Backend setup
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+    - name: Install backend dependencies
+      working-directory: backend
+      run: poetry install
+
+    - name: Run backend migrations
+      working-directory: backend
+      env:
+        DJANGO_SETTINGS_MODULE: core.settings.local
+        DB_HOST: localhost
+        DB_USER: postgres
+        DB_PASSWORD: postgres
+        DB_NAME: habitflow_test
+      run: poetry run python manage.py migrate
+
+    - name: Start backend server
+      working-directory: backend
+      env:
+        DJANGO_SETTINGS_MODULE: core.settings.local
+        DB_HOST: localhost
+        DB_USER: postgres
+        DB_PASSWORD: postgres
+        DB_NAME: habitflow_test
+      run: |
+        poetry run python manage.py runserver 8000 &
+        sleep 10
+
+    # Frontend setup
+    - name: Use Node.js 18
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: Install frontend dependencies
+      working-directory: frontend
+      run: npm ci
+
+    - name: Build frontend
+      working-directory: frontend
+      env:
+        REACT_APP_API_URL: http://localhost:8000
+      run: npm run build
+
+    # Integration tests
+    - name: Wait for backend to be ready
+      run: |
+        timeout 60s bash -c 'until curl -f http://localhost:8000/api/v1/; do sleep 2; done'
+
+    - name: Run API health check
+      run: curl -f http://localhost:8000/api/v1/ || exit 1
+
+    - name: Test API endpoints
+      run: |
+        # Test user registration endpoint
+        curl -X POST http://localhost:8000/api/v1/auth/register/ \
+          -H "Content-Type: application/json" \
+          -d '{"username":"testuser","email":"test@example.com","password":"testpass123"}' || true
+        
+        # Test habits endpoint (should require auth)
+        response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/api/v1/habits/)
+        if [ "$response" != "401" ]; then
+          echo "Expected 401 for unauthenticated habits request, got $response"
+          exit 1
+        fi
+
+  docker-compose-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Create environment file
+      run: |
+        cp backend/.env.example backend/.env
+        cp frontend/.env.example frontend/.env
+
+    - name: Build and start services
+      run: |
+        docker-compose up -d --build
+        sleep 30
+
+    - name: Check service health
+      run: |
+        # Check if all services are running
+        docker-compose ps
+        
+        # Test backend health
+        timeout 60s bash -c 'until curl -f http://localhost:8000/api/v1/; do sleep 2; done'
+        
+        # Test frontend is accessible
+        timeout 60s bash -c 'until curl -f http://localhost:3000/; do sleep 2; done'
+
+    - name: Run database migrations
+      run: docker-compose exec -T api python manage.py migrate
+
+    - name: Test database connection
+      run: docker-compose exec -T api python manage.py check --database default
+
+    - name: Cleanup
+      run: docker-compose down -v

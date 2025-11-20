@@ -1,0 +1,177 @@
+name: Release Management
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Version bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+      release_notes:
+        description: 'Additional release notes'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  draft-release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - name: Draft Release
+        uses: release-drafter/release-drafter@v5
+        with:
+          config-name: release-drafter.yml
+          disable-autolabeler: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  create-release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Determine version
+        id: version
+        run: |
+          # Get the latest tag
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Latest tag: $LATEST_TAG"
+          
+          # Remove 'v' prefix for version calculation
+          VERSION=${LATEST_TAG#v}
+          IFS='.' read -r -a VERSION_PARTS <<< "$VERSION"
+          
+          MAJOR=${VERSION_PARTS[0]:-0}
+          MINOR=${VERSION_PARTS[1]:-0}
+          PATCH=${VERSION_PARTS[2]:-0}
+          
+          case "${{ github.event.inputs.version_type }}" in
+            major)
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+              ;;
+            minor)
+              MINOR=$((MINOR + 1))
+              PATCH=0
+              ;;
+            patch)
+              PATCH=$((PATCH + 1))
+              ;;
+          esac
+          
+          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          NEW_TAG="v$NEW_VERSION"
+          
+          echo "New version: $NEW_VERSION"
+          echo "New tag: $NEW_TAG"
+          
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "tag=$NEW_TAG" >> $GITHUB_OUTPUT
+
+      - name: Update version files
+        run: |
+          # Update package.json version
+          if [ -f "frontend/package.json" ]; then
+            sed -i 's/"version": "[^"]*"/"version": "${{ steps.version.outputs.version }}"/' frontend/package.json
+            git add frontend/package.json
+          fi
+          
+          # Update pyproject.toml version
+          if [ -f "backend/pyproject.toml" ]; then
+            sed -i 's/version = "[^"]*"/version = "${{ steps.version.outputs.version }}"/' backend/pyproject.toml
+            git add backend/pyproject.toml
+          fi
+
+      - name: Create version bump commit
+        run: |
+          if git diff --staged --quiet; then
+            echo "No version files to update"
+          else
+            git commit -m "chore: bump version to ${{ steps.version.outputs.version }}"
+            git push origin main
+          fi
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Get commits since last tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || git rev-list --max-parents=0 HEAD)
+          
+          # Generate changelog content
+          CHANGELOG=$(cat << 'EOF'
+          ## What's Changed
+          
+          ${{ github.event.inputs.release_notes }}
+          
+          ### Commits
+          EOF
+          )
+          
+          # Add commit list
+          COMMITS=$(git log $LAST_TAG..HEAD --pretty=format:"- %s (@%an)")
+          
+          # Save changelog to file for multiline output
+          echo "$CHANGELOG" > changelog.md
+          echo "$COMMITS" >> changelog.md
+          
+          # Set output for GitHub release
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          cat changelog.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          release_name: HabitFlow ${{ steps.version.outputs.tag }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
+
+  notify-release:
+    runs-on: ubuntu-latest
+    needs: create-release
+    if: success()
+    
+    steps:
+      - name: Notify release completion
+        run: |
+          echo "🎉 Successfully created release ${{ needs.create-release.outputs.tag }}"
+          echo "Version: ${{ needs.create-release.outputs.version }}"
+          echo "Repository: MSCRAFI/habitflow"
+          echo "Domain: habitflow.scrafi.dev"
+          
+          # Future: Add Discord webhook notification
+          # curl -X POST -H 'Content-type: application/json' \
+          #   --data '{"content":"🎉 New HabitFlow release: ${{ needs.create-release.outputs.tag }} - habitflow.scrafi.dev"}' \
+          #   ${{ secrets.DISCORD_WEBHOOK_URL }}

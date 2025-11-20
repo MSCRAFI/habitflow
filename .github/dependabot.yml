@@ -1,0 +1,79 @@
+# Dependabot configuration for HabitFlow
+# Personal project - automatically creates PRs to update dependencies
+# See: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+
+updates:
+  # Backend Python dependencies
+  - package-ecosystem: "pip"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "MSCRAFI"
+    assignees:
+      - "MSCRAFI"
+    commit-message:
+      prefix: "deps(backend):"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "backend"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    ignore:
+      # Ignore major version updates for Django (manual review needed)
+      - dependency-name: "django"
+        update-types: ["version-update:semver-major"]
+
+  # Frontend Node.js dependencies
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "MSCRAFI"
+    assignees:
+      - "MSCRAFI"
+    commit-message:
+      prefix: "deps(frontend):"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "frontend"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    ignore:
+      # Ignore major version updates for React (manual review needed)
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+
+  # GitHub Actions dependencies
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "MSCRAFI"
+    assignees:
+      - "MSCRAFI"
+    commit-message:
+      prefix: "deps(actions):"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"
