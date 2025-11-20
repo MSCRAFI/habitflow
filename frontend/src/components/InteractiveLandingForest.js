@@ -25,8 +25,21 @@ const InteractiveLandingForest = () => {
     { text: "Swipe vertically on mobile to cycle day/night", target: "swipe" }
   ];
 
-  // Initialize demo trees
+  // Reset component state on mount (fixes navigation corruption)
   useEffect(() => {
+    // Force complete state reset with a slight delay to ensure clean slate
+    const resetComponent = () => {
+      setMousePos({ x: 0, y: 0 });
+      setWeather('sunny');
+      setTimeOfDay('day');
+      setParticles([]);
+      setInteractions(0);
+      setShowTutorial(true);
+      setTutorialStep(0);
+    };
+    
+    resetComponent();
+    
     const demoTrees = [
       { id: 1, x: 20, y: 70, size: 1, type: 'oak', planted: false, growth: 0 },
       { id: 2, x: 45, y: 75, size: 1, type: 'pine', planted: false, growth: 0 },

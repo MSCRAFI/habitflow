@@ -404,6 +404,7 @@ const ModernForestDashboard = () => {
   };
 
   const getTotalProgress = () => {
+    if (habits.length === 0) return 0; // Prevent NaN when no habits exist
     const completed = habits.filter(h => h.completed).length;
     return (completed / habits.length) * 100;
   };

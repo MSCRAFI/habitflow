@@ -122,7 +122,7 @@ const ModernForestHome = () => {
               </div>
             </div>
             <div className="hero-visual">
-              <InteractiveLandingForest />
+              <InteractiveLandingForest key={Date.now()} />
             </div>
           </div>
         </div>
