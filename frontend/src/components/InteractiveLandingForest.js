@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import EnhancedInteractiveEffects from './EnhancedInteractiveEffects';
 
 const InteractiveLandingForest = () => {
+  const { user } = useAuth(); // Listen for auth changes to detect logout
   const forestRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [weather, setWeather] = useState('sunny');
@@ -15,6 +17,7 @@ const InteractiveLandingForest = () => {
   const [tutorialStep, setTutorialStep] = useState(0);
   const animationRef = useRef(null);
   const touchRef = useRef({ isTouch: false, startY: 0 });
+  const [resetKey, setResetKey] = useState(0);
 
   // Tutorial steps
   const tutorialSteps = [
@@ -24,6 +27,14 @@ const InteractiveLandingForest = () => {
     { text: "Click the sky to change the weather", target: "weather" },
     { text: "Swipe vertically on mobile to cycle day/night", target: "swipe" }
   ];
+
+  // Listen for logout events and force complete reset (fixes Profile -> Logout animation corruption)
+  useEffect(() => {
+    // When user becomes null (logout), trigger a complete component reset
+    if (user === null) {
+      setResetKey(prev => prev + 1);
+    }
+  }, [user]);
 
   // Reset component state on mount (fixes navigation corruption)
   useEffect(() => {
@@ -60,7 +71,7 @@ const InteractiveLandingForest = () => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, []);
+  }, [resetKey]);
 
   // Mouse movement tracking with parallax effect
   const handleMouseMove = useCallback((e) => {
