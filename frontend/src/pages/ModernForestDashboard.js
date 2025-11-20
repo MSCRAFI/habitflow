@@ -478,7 +478,7 @@ const ModernForestDashboard = () => {
                 </svg>
               </div>
               <div className="stat-content">
-                <div className="stat-number">{Math.max(...habits.map(h => h.streak))}</div>
+                <div className="stat-number">{habits.length > 0 ? Math.max(...habits.map(h => h.streak)) : 0}</div>
                 <div className="stat-label">Best Streak</div>
               </div>
             </div>
@@ -640,7 +640,7 @@ const ModernForestDashboard = () => {
                 <span className="stat-label">Trees</span>
               </div>
               <div className="forest-stat">
-                <span className="stat-value">{Math.max(...habits.map(h => h.streak), 0)}</span>
+                <span className="stat-value">{habits.length > 0 ? Math.max(...habits.map(h => h.streak)) : 0}</span>
                 <span className="stat-label">Best Streak</span>
               </div>
               <div className="forest-stat">

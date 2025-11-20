@@ -76,6 +76,9 @@ class HabitAnalyticsSerializer(serializers.Serializer):
     completion_rate = serializers.FloatField()
     this_week_completions = serializers.IntegerField()
     this_month_completions = serializers.IntegerField()
+    current_streak = serializers.IntegerField()
+    best_streak = serializers.IntegerField()
+    total_points = serializers.IntegerField()
 
 
 class BadgeSerializer(serializers.ModelSerializer):

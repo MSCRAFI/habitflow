@@ -78,20 +78,30 @@ const Profile = () => {
 
   const fetchUserStats = async () => {
     try {
-      const analyticsData = await api.getAnalytics();
+      // Use the correct statistics endpoint that actually exists
+      const analyticsData = await api.getStatistics();
       const userProfile = await api.getProfile();
       const userBadges = await api.getUserBadges();
       
+      // Helper function to safely convert values to numbers, avoiding infinity
+      const safeNumber = (value, defaultValue = 0) => {
+        const num = Number(value);
+        if (!isFinite(num) || isNaN(num)) {
+          return defaultValue;
+        }
+        return num;
+      };
+      
       setStats({
-        habitsCreated: analyticsData.total_habits || userProfile.total_habits_created || 0,
-        totalCompletions: analyticsData.total_completions || userProfile.total_completions || 0,
-        currentStreak: analyticsData.current_streak || userProfile.current_streak || 0,
-        bestStreak: analyticsData.best_streak || userProfile.best_streak || 0,
-        totalPoints: userProfile.total_points || 0,
-        level: userProfile.level || 1,
+        habitsCreated: safeNumber(analyticsData?.total_habits || userProfile?.total_habits_created, 0),
+        totalCompletions: safeNumber(analyticsData?.total_completions || userProfile?.total_completions, 0),
+        currentStreak: safeNumber(analyticsData?.current_streak || userProfile?.current_streak, 0),
+        bestStreak: safeNumber(analyticsData?.best_streak || userProfile?.best_streak, 0),
+        totalPoints: safeNumber(userProfile?.total_points, 0),
+        level: safeNumber(userProfile?.level, 1),
         progressToNext: 65, // Calculate based on points
-        joinedDaysAgo: Math.floor((new Date() - new Date(user?.created_at)) / (1000 * 60 * 60 * 24)) || 0,
-        completionRate: analyticsData.completion_rate || 0
+        joinedDaysAgo: user?.created_at ? Math.floor((new Date() - new Date(user.created_at)) / (1000 * 60 * 60 * 24)) : 0,
+        completionRate: safeNumber(analyticsData?.completion_rate, 0)
       });
 
       // Update badges with real data
@@ -107,6 +117,7 @@ const Profile = () => {
     } catch (error) {
       console.error('Error fetching user stats:', error);
       // Keep hardcoded defaults if API fails
+      console.log('Using fallback stats for new user');
     }
   };
 

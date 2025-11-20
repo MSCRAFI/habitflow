@@ -256,6 +256,7 @@ class AnalyticsService:
         week_ago = now - timedelta(days=7)
         month_ago = now - timedelta(days=30)
         
+        # Initialize stats with safe defaults for new users
         stats = {
             'total_habits': habits.count(),
             'active_habits': habits.filter(is_active=True).count(),
@@ -265,20 +266,31 @@ class AnalyticsService:
             'this_week_completions': completed_entries.filter(date__gte=week_ago).count(),
             'this_month_completions': completed_entries.filter(date__gte=month_ago).count(),
             'current_streak': 0,
+            'best_streak': 0,
             'total_points': 0
         }
         
+        # Calculate completion rate safely
         if entries.count() > 0:
             stats['completion_rate'] = (completed_entries.count() / entries.count()) * 100
             
+        # Calculate streak data safely for users with habits
         if habits.exists():
-            streaks = [h.current_streak for h in habits]
-            stats['average_streak'] = sum(streaks) / len(streaks)
-            stats['current_streak'] = max(streaks)
+            streaks = [h.current_streak for h in habits if h.current_streak is not None]
+            best_streaks = [h.best_streak for h in habits if h.best_streak is not None]
             
-        # Get total points from profile
+            if streaks:
+                stats['average_streak'] = sum(streaks) / len(streaks)
+                stats['current_streak'] = max(streaks)
+            if best_streaks:
+                stats['best_streak'] = max(best_streaks)
+            
+        # Get data from user profile (created by signals)
         if hasattr(user, 'profile'):
-            stats['total_points'] = user.profile.total_points
+            profile = user.profile
+            stats['total_points'] = profile.total_points or 0
+            stats['current_streak'] = max(stats['current_streak'], profile.current_streak or 0)
+            stats['best_streak'] = max(stats['best_streak'], profile.best_streak or 0)
             
         return stats
 
