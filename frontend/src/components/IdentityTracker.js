@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNotification } from '../contexts/NotificationContext';
 import api from '../services/api';
 
@@ -9,11 +9,7 @@ const IdentityTracker = () => {
   const [identity, setIdentity] = useState('');
   const { showSuccess, showError } = useNotification();
 
-  useEffect(() => {
-    fetchProfile();
-  }, []);
-
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     try {
       setLoading(true);
       const data = await api.getProfile();
@@ -25,7 +21,11 @@ const IdentityTracker = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [showError]);
+
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
 
   const handleSave = async () => {
     try {

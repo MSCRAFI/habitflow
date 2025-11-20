@@ -91,7 +91,7 @@ const HabitList = ({
         </div>
       </div>
     );
-  }, [selectedIds, onComplete, onEdit, onDelete, dragId]);
+  }, [selectedIds, onComplete, onEdit, onDelete, dragId, handleDrop, onToggleSelect]);
 
   return (
     <div className="habit-list">

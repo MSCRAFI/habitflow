@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNotification } from '../contexts/NotificationContext';
 import api from '../services/api';
 
@@ -7,11 +7,7 @@ const BadgeShowcase = () => {
   const [loading, setLoading] = useState(true);
   const { showError } = useNotification();
 
-  useEffect(() => {
-    fetchBadges();
-  }, []);
-
-  const fetchBadges = async () => {
+  const fetchBadges = useCallback(async () => {
     try {
       setLoading(true);
       const data = await api.getBadges();
@@ -22,7 +18,11 @@ const BadgeShowcase = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [showError]);
+
+  useEffect(() => {
+    fetchBadges();
+  }, [fetchBadges]);
 
   if (loading) {
     return (

@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
 
 const ForestGame = () => {
-  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [forestData, setForestData] = useState(null);
   const [trees, setTrees] = useState([]);

@@ -5,7 +5,7 @@ const InteractiveLandingForest = () => {
   const forestRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [weather, setWeather] = useState('sunny');
-  const [season, setSeason] = useState('spring');
+  const [season] = useState('spring');
   const [timeOfDay, setTimeOfDay] = useState('day');
   const [trees, setTrees] = useState([]);
   const [animals, setAnimals] = useState([]);
@@ -102,7 +102,7 @@ const InteractiveLandingForest = () => {
   }, [tutorialStep]);
 
   // Weather control
-  const handleWeatherClick = () => {
+  const handleWeatherClick = useCallback(() => {
     const weatherCycle = ['sunny', 'cloudy', 'rainy', 'stormy'];
     const currentIndex = weatherCycle.indexOf(weather);
     const nextWeather = weatherCycle[(currentIndex + 1) % weatherCycle.length];
@@ -112,7 +112,7 @@ const InteractiveLandingForest = () => {
     if (tutorialStep === 3) {
       setTutorialStep(4);
     }
-  };
+  }, [weather, tutorialStep]);
 
   // Touch handlers for mobile
   const handleTouchStart = (e) => {

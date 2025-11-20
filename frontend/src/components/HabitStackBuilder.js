@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import api from '../services/api';
 import { useNotification } from '../contexts/NotificationContext';
 
@@ -8,7 +8,7 @@ const HabitStackBuilder = () => {
   const [form, setForm] = useState({ habit: '', anchor_habit: '', position: 0 });
   const { showError, showSuccess } = useNotification();
 
-  const load = async () => {
+  const load = useCallback(async () => {
     try {
       const hs = await api.getHabits();
       setHabits(hs.results || hs || []);
@@ -18,9 +18,9 @@ const HabitStackBuilder = () => {
       console.error(e);
       showError('Failed to load habit stacks');
     }
-  };
+  }, [showError]);
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [load]);
 
   const create = async (e) => {
     e.preventDefault();
